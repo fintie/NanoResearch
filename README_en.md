@@ -643,6 +643,7 @@ Treat it as a strong draft, not a final submission. The system can generate a fu
 ## Acknowledgements
 
 - [claude-scholar](https://github.com/Galaxy-Dawn/claude-scholar) — scientific research skills for Claude Code
+- [nanobot](https://github.com/HKUDS/nanobot) - nanobot: The Ultra-Lightweight OpenClaw
 
 ## Star History
 
@@ -666,6 +667,12 @@ If NanoResearch helps your work, cite the repository:
 }
 ```
 
-## License
+## 📄 License
 
-MIT
+This project is licensed under [MIT License](LICENSE).
+
+
+<p align="center">
+  <em> Thanks for visiting ✨ NanoResearch!</em><br><br>
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=OpenRaiser.NanoResearch&style=for-the-badge&color=00d4ff" alt="Views">
+</p>

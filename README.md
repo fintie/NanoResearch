@@ -575,6 +575,7 @@ conda install -c conda-forge tectonic
 ## Acknowledgements
 
 - [claude-scholar](https://github.com/Galaxy-Dawn/claude-scholar) — Claude Code 的科研技能扩展
+- [nanobot](https://github.com/HKUDS/nanobot) - nanobot: 轻量级OpenClaw
 
 ## Star History
 
@@ -596,6 +597,11 @@ conda install -c conda-forge tectonic
 }
 ```
 
-## License
+## 📄 License
 
-MIT
+This project is licensed under [MIT License](LICENSE).
+
+<p align="center">
+  <em> Thanks for visiting ✨ NanoResearch!</em><br><br>
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=OpenRaiser.NanoResearch&style=for-the-badge&color=00d4ff" alt="Views">
+</p>
