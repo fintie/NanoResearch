@@ -274,6 +274,23 @@ pip install -e ".[dev]"
 - `NANORESEARCH_API_KEY`
 - `NANORESEARCH_TIMEOUT`
 
+**可选：使用 OpenClaw 凭据自动读取 base_url / api_key**（不手写密钥）
+
+在 `~/.nanoresearch/config.json` 增加：
+
+```json
+{
+  "research": {
+    "credential_source": {
+      "type": "openclaw",
+      "provider": "openrouter"
+    }
+  }
+}
+```
+
+> 说明：会从 `~/.openclaw/openclaw.json` 的 `models.providers` 读取对应 provider 的 `baseUrl/apiKey`。若 provider 没有保存 `apiKey`（如仅 OAuth），请继续手动填写 `base_url` / `api_key`。
+
 #### Literature Search API Keys (optional)
 
 IDEATION 阶段使用 OpenAlex 和 Semantic Scholar 检索学术文献。不配置 API Key 也能运行（匿名访问），但速率限制较低。

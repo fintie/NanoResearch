@@ -55,6 +55,8 @@ class ResearchConfig(BaseModel):
     base_url: str = ""
     api_key: str = ""
     timeout: float = 180.0
+    # Optional credential sourcing (e.g., OpenClaw provider config)
+    credential_source: dict = Field(default_factory=dict)
 
     ideation: StageModelConfig = Field(
         default_factory=lambda: StageModelConfig(
@@ -220,6 +222,44 @@ class ResearchConfig(BaseModel):
             raise RuntimeError(
                 f"Invalid config values in {path}: {exc}"
             ) from exc
+
+        # Optional credential source (e.g., OpenClaw config)
+        source = cfg.credential_source or {}
+        if source.get("type") == "openclaw" and (not cfg.base_url or not cfg.api_key):
+            provider = source.get("provider") or source.get("provider_id")
+            if not provider:
+                raise ValueError(
+                    "credential_source.type=openclaw requires a 'provider'"
+                )
+            oc_path = Path(source.get("path", "~/.openclaw/openclaw.json")).expanduser()
+            try:
+                oc_raw = oc_path.read_text(encoding="utf-8")
+                oc_data = json.loads(oc_raw)
+            except OSError as exc:
+                raise RuntimeError(
+                    f"Cannot read OpenClaw config {oc_path}: {exc}"
+                ) from exc
+            except json.JSONDecodeError as exc:
+                raise RuntimeError(
+                    f"OpenClaw config {oc_path} contains invalid JSON: {exc}"
+                ) from exc
+
+            providers = oc_data.get("models", {}).get("providers", {})
+            entry = providers.get(provider)
+            if not isinstance(entry, dict):
+                raise ValueError(
+                    f"OpenClaw provider '{provider}' not found in {oc_path}"
+                )
+            base_url = entry.get("baseUrl") or entry.get("base_url")
+            api_key = entry.get("apiKey") or entry.get("api_key")
+            if not base_url or not api_key:
+                raise ValueError(
+                    f"OpenClaw provider '{provider}' must define baseUrl/base_url and apiKey/api_key"
+                )
+            if not cfg.base_url:
+                cfg.base_url = base_url.strip()
+            if not cfg.api_key:
+                cfg.api_key = api_key.strip()
 
         # Environment variable overrides (highest priority)
         if env_url := os.environ.get("NANORESEARCH_BASE_URL"):

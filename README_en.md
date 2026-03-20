@@ -304,6 +304,23 @@ Environment-variable overrides are also supported:
 - `NANORESEARCH_API_KEY`
 - `NANORESEARCH_TIMEOUT`
 
+**Optional: Use OpenClaw credentials to auto-fill base_url / api_key**
+
+Add to `~/.nanoresearch/config.json`:
+
+```json
+{
+  "research": {
+    "credential_source": {
+      "type": "openclaw",
+      "provider": "openrouter"
+    }
+  }
+}
+```
+
+> Note: This reads `baseUrl/apiKey` from `models.providers` in `~/.openclaw/openclaw.json`. If the provider does not store an `apiKey` (e.g., OAuth-only), you still need to set `base_url` / `api_key` manually.
+
 #### Literature Search API Keys (optional but recommended)
 
 The IDEATION stage uses OpenAlex and Semantic Scholar to search academic papers. Without API keys the pipeline still works (anonymous access), but rate limits are much lower.
